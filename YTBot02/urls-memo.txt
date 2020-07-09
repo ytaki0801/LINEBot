@@ -1,1 +1,0 @@
-https://ytakibot02.herokuapp.com/ | https://git.heroku.com/ytakibot02.git
