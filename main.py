@@ -3,25 +3,25 @@ from flask              import Flask, request
 from linebot            import LineBotApi, WebhookHandler
 from linebot.models     import MessageEvent, TextMessage, TextSendMessage
 
-app = Flask(__name__)
+A = Flask(__name__)
+B = LineBotApi(os.environ["ACCESS_TOKEN"])
+H = WebhookHandler(os.environ["CHANNEL_SECRET"])
 
-bot = LineBotApi(os.environ["ACCESS_TOKEN"])
-handler = WebhookHandler(os.environ["CHANNEL_SECRET"])
-
-@app.route("/", methods=['POST'])
+@A.route("/", methods=['POST'])
 def callback():
-    sign = request.headers['X-Line-Signature']
-    body = request.get_data(as_text=True)
-    handler.handle(body, sign)
+    s = request.headers['X-Line-Signature']
+    b = request.get_data(as_text=True)
+    H.handle(b, s)
     return('OK')
 
-@handler.add(MessageEvent, message=TextMessage)
+@H.add(MessageEvent, message=TextMessage)
 def handle_message(e):
     r = e.message.text
     if (r.lower() == 'help'):
         r = '『help』以外の送信メッセージはそのままオウム返しします．'
-    bot.reply_message(e.reply_token, TextSendMessage(text=r))
+    B.reply_message(e.reply_token, TextSendMessage(text=r))
+
 
 if __name__ == "__main__":
-    port = int(os.getenv("PORT"))
-    app.run(host="0.0.0.0", port=port)
+    p = int(os.getenv("PORT"))
+    A.run(host="0.0.0.0", port=p)
