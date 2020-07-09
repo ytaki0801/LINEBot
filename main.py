@@ -3,6 +3,7 @@ from flask          import Flask, request
 from linebot        import LineBotApi, WebhookHandler
 from linebot.models import MessageEvent, TextMessage, TextSendMessage
 
+HELP = '都道府県名（『茨城』や『東京都』）を送信すると，その都道府県に高専があるかどうかが返信されます．'
 OK0 = [ '北海道', '東京', '東京都', '京都', '京都府', '大阪', '大阪府' ]
 OK1 = [ '青森', '岩手', '宮城', '秋田', '山形', '福島' ]
 OK2 = [ '茨城', '栃木', '群馬', '千葉' ]
@@ -30,7 +31,7 @@ def callback():
 def handle_message(e):
     u = e.message.text
     if (u.lower() == 'help'):
-        r = '都道府県名（『茨城』や『東京都』）を送信すると，その都道府県に高専があるかどうかが返信されます．'
+        r = HELP
     else:
         r = u + 'に高専はありま'
         if u in OK:
