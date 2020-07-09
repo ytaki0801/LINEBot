@@ -38,7 +38,7 @@ def handle_message(e):
         elif u in NO:
             r += 'せん．'
         else:
-            r = '関東の県名を送信して下さい．'
+            r = '都道府県名を送信して下さい．'
     B.reply_message(e.reply_token, TextSendMessage(text=r))
 
 if __name__ == "__main__":
