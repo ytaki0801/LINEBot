@@ -1,38 +1,27 @@
 import os
-from flask import Flask, request, abort
-from linebot import LineBotApi, WebhookHandler
-from linebot.exceptions import InvalidSignatureError
+from flask          import Flask, request
+from linebot        import LineBotApi, WebhookHandler
 from linebot.models import MessageEvent, TextMessage, TextSendMessage
 
-app = Flask(__name__)
+App = Flask(__name__)
 
-# LINE Messaging API Access Token
-line_bot_api = LineBotApi(os.environ["ACCESS_TOKEN"])
-# LINE Channel Secret
-handler = WebhookHandler(os.environ["CHANNEL_SECRET"])
+Bot = LineBotApi(os.environ["ACCESS_TOKEN"])
+Handler = WebhookHandler(os.environ["CHANNEL_SECRET"])
 
-@app.route("/", methods=['POST'])
+@App.route("/", methods=['POST'])
 def callback():
-    # get X-Line-Signature header value
-    signature = request.headers['X-Line-Signature']
-
-    # get request body as text
     body = request.get_data(as_text=True)
-    app.logger.info("Request body: " + body)
+    sign = request.headers['X-Line-Signature']
+    Handler.handle(body, sign)
 
-    # handle webhook body
-    try:
-        handler.handle(body, signature)
-    except InvalidSignatureError:
-        abort(400)
-
-    return 'OK'
-
-@handler.add(MessageEvent, message=TextMessage)
-def handle_message(event):
-    line_bot_api.reply_message(
-        event.reply_token,
-        TextSendMessage(text=event.message.text)
+@Handler.add(MessageEvent, message=TextMessage)
+def handle_message(e):
+    replyMes = e.message.text
+    if replyMes.lower() == 'help':
+        replyMes = '『help』以外の送信メッセージそのままオウム返しします．'
+    Bot.reply_message(
+        e.reply_token,
+        TextSendMessage(text=replyMes)
     )
 
 if __name__ == "__main__":
