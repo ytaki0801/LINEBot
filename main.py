@@ -25,8 +25,8 @@ def handle_message(e):
         r = u + 'に高専はありま'
         if u in OK:
             r += 'す．'
-        elif r in NO:
-            u += 'せん．'
+        elif u in NO:
+            r += 'せん．'
         else:
             r = '関東の県名を送信して下さい．'
     B.reply_message(e.reply_token, TextSendMessage(text=r))
