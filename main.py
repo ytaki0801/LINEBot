@@ -17,8 +17,9 @@ def callback():
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(e):
-    replyMes = e.message.text
-    replyMes = '『help』以外の送信メッセージそのままオウム返しします．'
+    r = e.message.text
+    if (r.lower() == 'help'):
+        r = '『help』以外の送信メッセージはそのままオウム返しします．'
     bot.reply_message(e.reply_token, TextSendMessage(text=replyMes))
 
 if __name__ == "__main__":
