@@ -30,7 +30,7 @@ def callback():
 def handle_message(e):
     u = e.message.text
     if (u.lower() == 'help'):
-        r = '都道府県名（『茨城』や『東京都』）を送信すると，その県に高専があるかどうかが返信されます．'
+        r = '都道府県名（『茨城』や『東京都』）を送信すると，その都道府県に高専があるかどうかが返信されます．'
     else:
         r = u + 'に高専はありま'
         if u in OK:
