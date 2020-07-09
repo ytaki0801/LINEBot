@@ -1,1 +1,1 @@
-LINE Bot sample programs
+LINE Bot sample programs for various platforms and programming languages
