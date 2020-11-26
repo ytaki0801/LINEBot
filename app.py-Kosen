@@ -4,8 +4,7 @@ from flask          import Flask, request
 from linebot        import LineBotApi, WebhookHandler
 from linebot.models import MessageEvent, TextMessage, TextSendMessage
 
-<<<<<<< HEAD
-HELP = '0以上の整数値xを送信すると，x番目のフィボナッチ数が返信されます．都道府県名（『茨城』や『東京都』）を送信すると，その都道府県に高専があるかどうかが返信されます．'
+HELP = '都道府県名（『茨城』や『東京都』）を送信すると，その都道府県に高専があるかどうかが返信されます．'
 OK0 = [ '北海道', '東京', '東京都', '京都', '京都府', '大阪', '大阪府' ]
 OK1 = [ '青森', '岩手', '宮城', '秋田', '山形', '福島' ]
 OK2 = [ '茨城', '栃木', '群馬', '千葉' ]
@@ -17,10 +16,6 @@ OK = OK1 + OK2 + OK3 + OK4 + OK5 + OK6
 OK += OK0 + list(map(lambda x: x+'県', OK))
 NO = [ '神奈川', '埼玉', '山梨', '滋賀', '佐賀' ]
 NO += list(map(lambda x: x+'県', NO))
-=======
-from jmclisp import s_rep
-HELP = "文字列を入力すると原初LISP評価器による評価が行われます．数値は使えません．例：((lambda (x) (cdr x)) '(a b c)) => (b c)"
->>>>>>> 44045ba27c4d91c7433d339f99b3e21101125a0e
 
 A = Flask(__name__)
 B = LineBotApi(os.environ["ACCESS_TOKEN"])
@@ -39,7 +34,13 @@ def handle_message(e):
     if (u.lower() == 'help'):
         r = HELP
     else:
-        r = s_rep(u)
+        r = u + 'に高専はありま'
+        if u in OK:
+            r += 'す．'
+        elif u in NO:
+            r += 'せん．'
+        else:
+            r = '都道府県名を送信して下さい．'
     B.reply_message(e.reply_token, TextSendMessage(text=r))
 
 if __name__ == "__main__":
