@@ -3,9 +3,9 @@ import os
 from flask          import Flask, request
 from linebot        import LineBotApi, WebhookHandler
 from linebot.models import MessageEvent, TextMessage, TextSendMessage
-import math
 
-HELP = 'Python eval will be executed for input string'
+from jmclisp import s_rep
+HELP = "文字列を入力すると原初LISP評価器による評価が行われます．数値は使えません．例：((lambda (x) (cdr x)) '(a b c)) => (b c)"
 
 A = Flask(__name__)
 B = LineBotApi(os.environ["ACCESS_TOKEN"])
@@ -24,7 +24,7 @@ def handle_message(e):
     if (u.lower() == 'help'):
         r = HELP
     else:
-        r = eval("str("+u+")")
+        r = s_rep(u)
     B.reply_message(e.reply_token, TextSendMessage(text=r))
 
 if __name__ == "__main__":
