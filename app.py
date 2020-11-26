@@ -4,7 +4,7 @@ from flask          import Flask, request
 from linebot        import LineBotApi, WebhookHandler
 from linebot.models import MessageEvent, TextMessage, TextSendMessage
 
-HELP = '都道府県名（『茨城』や『東京都』）を送信すると，その都道府県に高専があるかどうかが返信されます．'
+HELP = '0以上の整数値xを送信すると，x番目のフィボナッチ数が返信されます．都道府県名（『茨城』や『東京都』）を送信すると，その都道府県に高専があるかどうかが返信されます．'
 OK0 = [ '北海道', '東京', '東京都', '京都', '京都府', '大阪', '大阪府' ]
 OK1 = [ '青森', '岩手', '宮城', '秋田', '山形', '福島' ]
 OK2 = [ '茨城', '栃木', '群馬', '千葉' ]
