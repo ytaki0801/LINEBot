@@ -24,7 +24,7 @@ def handle_message(e):
     if (u.lower() == 'help'):
         r = HELP
     else:
-        r = eval("str("+u+", {'math':math})")
+        r = eval("str(" + u + ")", {"math":math})
     B.reply_message(e.reply_token, TextSendMessage(text=r))
 
 if __name__ == "__main__":
